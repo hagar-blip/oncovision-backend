@@ -30,3 +30,19 @@ exports.sendMessage = async (req, res) => {
     });
   }
 };
+
+exports.getChatHistory = async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+
+    const result =
+      await aiService.getChatHistory(sessionId);
+
+    res.json(result);
+
+  } catch (error) {
+    res.status(500).json({
+      error: error.message
+    });
+  }
+};

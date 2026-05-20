@@ -5,4 +5,5 @@ const aiController = require("../controllers/ai.controller");
 
 router.post("/chat/start", auth, aiController.startChat);
 router.post("/chat/message", auth, aiController.sendMessage);
+router.get("/chat/:sessionId", auth, aiController.getChatHistory);
 module.exports = router;

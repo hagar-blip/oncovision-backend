@@ -19,3 +19,14 @@ exports.saveMessage = async (
     }
   });
 };
+
+exports.getMessages = async (sessionId) => {
+  return await prisma.chatMessage.findMany({
+    where: {
+      sessionId: Number(sessionId)
+    },
+    orderBy: {
+      createdAt: "asc"
+    }
+  });
+};
