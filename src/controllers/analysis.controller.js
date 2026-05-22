@@ -17,7 +17,9 @@ exports.upload = async (req, res) => {
   try {
     const result = await analysisService.upload(
       req.file.filename,
-      req.body.patientId
+      req.body.patientId,
+      req.body.organType,
+      req.body.analysisType
     );
 
     res.status(201).json(result);

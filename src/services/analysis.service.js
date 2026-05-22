@@ -4,9 +4,16 @@ exports.getRecent = async () => {
   return await analysisRepository.getRecent();
 };
 
-exports.upload = async (filename, patientId) => {
+exports.upload = async (
+  filename,
+  patientId,
+  organType,
+  analysisType
+) => {
   return await analysisRepository.createAnalysis(
     filename,
-    patientId
+    patientId,
+    organType,
+    analysisType
   );
 };

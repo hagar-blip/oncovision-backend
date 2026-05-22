@@ -21,12 +21,18 @@ exports.getRecent = async () => {
   });
 };
 
-exports.createAnalysis = async (filename, patientId) => {
+exports.createAnalysis = async (
+  filename,
+  patientId,
+  organType,
+  analysisType
+) => {
   return await prisma.analysis.create({
     data: {
       patientId: Number(patientId),
       imageUrl: filename,
-      analysisType: "MRI",
+      organType,
+      analysisType,
       riskLevel: "Pending",
       status: "processing"
     }
