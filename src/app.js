@@ -8,6 +8,8 @@ const userRoutes = require("./routes/user.routes");
 const analysisRoutes = require("./routes/analysis.routes");
 const app = express();
 const aiRoutes = require("./routes/ai.routes");
+const patientRoutes =
+  require("./routes/patient.routes");
 
 app.use(cors());
 app.use(express.json());
@@ -20,5 +22,7 @@ app.get("/", (req, res) => {
   res.send("OncoVision API Running");
 });
 app.use("/ai", aiRoutes);
-module.exports = app;
+app.use("/patients", patientRoutes);
 app.use("/users", userRoutes);
+module.exports = app;
+// app.use("/users", userRoutes);
