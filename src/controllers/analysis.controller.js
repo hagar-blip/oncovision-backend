@@ -3,9 +3,7 @@ const analysisService = require("../services/analysis.service");
 exports.getRecent = async (req, res) => {
   try {
     const analyses = await analysisService.getRecent();
-
     res.json(analyses);
-
   } catch (error) {
     res.status(500).json({
       error: error.message
@@ -15,16 +13,22 @@ exports.getRecent = async (req, res) => {
 
 exports.upload = async (req, res) => {
   try {
+    if (!req.file) {
+      return res.status(400).json({
+        error: "No image uploaded"
+      });
+    }
+
     const result = await analysisService.upload(
-      req.file.filename,
+      req.file.path, // بدل filename
       req.body.patientId,
-      req.body.organType,
-      req.body.analysisType
+      req.body.organType
     );
 
     res.status(201).json(result);
 
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       error: error.message
     });
