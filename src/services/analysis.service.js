@@ -19,15 +19,28 @@
 // };
 
 const analysisRepository = require("../repositories/analysis.repository");
+const cloudinary = require("../config/cloudinary");
+const streamifier = require("streamifier");
 
 exports.getRecent = async () => {
   return await analysisRepository.getRecent();
 };
 
 exports.upload = async (imageBuffer, patientId, organType) => {
-  // هنا هنخزن اسم placeholder مؤقت
+  const imageUrl = await new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: "oncovision" },
+      (error, result) => {
+        if (error) reject(error);
+        else resolve(result.secure_url);
+      }
+    );
+
+    streamifier.createReadStream(imageBuffer).pipe(stream);
+  });
+
   return await analysisRepository.createAnalysis(
-    "uploaded-image",
+    imageUrl,
     patientId,
     organType
   );
