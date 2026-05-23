@@ -25,4 +25,3 @@ app.use("/ai", aiRoutes);
 app.use("/patients", patientRoutes);
 app.use("/users", userRoutes);
 module.exports = app;
-// app.use("/users", userRoutes);

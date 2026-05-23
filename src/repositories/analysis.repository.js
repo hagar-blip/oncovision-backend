@@ -7,9 +7,8 @@ exports.getRecent = async () => {
     },
     take: 5,
     select: {
-      id: true, 
+      id: true,
       analysisType: true,
-      organType: true,
       riskLevel: true,
       status: true,
       createdAt: true,
@@ -22,19 +21,26 @@ exports.getRecent = async () => {
   });
 };
 
-exports.createAnalysis = async (
-  filename,
-  patientId,
-  organType
-) => {
+exports.createAnalysis = async (filename, patientId, organType) => {
   return await prisma.analysis.create({
     data: {
       patientId: Number(patientId),
       imageUrl: filename,
-      organType: organType,
-      analysisType: organType.toUpperCase(), // ضيفي ده
+      organType,
+      analysisType: organType.toUpperCase(),
       riskLevel: "Pending",
       status: "processing"
+    }
+  });
+};
+
+exports.getById = async (id) => {
+  return await prisma.analysis.findUnique({
+    where: {
+      id: Number(id)
+    },
+    include: {
+      patient: true
     }
   });
 };

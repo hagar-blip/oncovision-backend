@@ -4,21 +4,18 @@ exports.getRecent = async (req, res) => {
   try {
     const analyses = await analysisService.getRecent();
     res.json(analyses);
+
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({
+      error: error.message
+    });
   }
 };
 
 exports.upload = async (req, res) => {
   try {
-    if (!req.file) {
-      return res.status(400).json({
-        error: "No image uploaded"
-      });
-    }
-
     const result = await analysisService.upload(
-      req.file.buffer,   // مهم جدًا
+      req.file.filename,
       req.body.patientId,
       req.body.organType
     );
@@ -26,7 +23,27 @@ exports.upload = async (req, res) => {
     res.status(201).json(result);
 
   } catch (error) {
-    console.error(error);
+    res.status(500).json({
+      error: error.message
+    });
+  }
+};
+
+exports.getById = async (req, res) => {
+  try {
+    const result = await analysisService.getById(
+      req.params.id
+    );
+
+    if (!result) {
+      return res.status(404).json({
+        error: "Analysis not found"
+      });
+    }
+
+    res.json(result);
+
+  } catch (error) {
     res.status(500).json({
       error: error.message
     });
