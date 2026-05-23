@@ -5,9 +5,7 @@ exports.getRecent = async (req, res) => {
     const analyses = await analysisService.getRecent();
     res.json(analyses);
   } catch (error) {
-    res.status(500).json({
-      error: error.message
-    });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -20,7 +18,7 @@ exports.upload = async (req, res) => {
     }
 
     const result = await analysisService.upload(
-      req.file.path, // بدل filename
+      req.file.buffer,   // مهم جدًا
       req.body.patientId,
       req.body.organType
     );
