@@ -7,8 +7,9 @@ exports.getRecent = async () => {
     },
     take: 5,
     select: {
-      id: true,
+      id: true, 
       analysisType: true,
+      organType: true,
       riskLevel: true,
       status: true,
       createdAt: true,
@@ -24,15 +25,14 @@ exports.getRecent = async () => {
 exports.createAnalysis = async (
   filename,
   patientId,
-  organType,
-  analysisType
+  organType
 ) => {
   return await prisma.analysis.create({
     data: {
       patientId: Number(patientId),
       imageUrl: filename,
-      organType,
-      analysisType,
+      organType: organType,
+      analysisType: organType.toUpperCase(), // ضيفي ده
       riskLevel: "Pending",
       status: "processing"
     }
