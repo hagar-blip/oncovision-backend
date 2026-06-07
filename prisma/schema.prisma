@@ -18,25 +18,35 @@ model User {
 }
 
 model Patient {
-  id        Int        @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   name      String
   age       Int
   gender    String
-  createdAt DateTime   @default(now())
-  analyses  Analysis[]
+  createdAt DateTime @default(now())
+
+  analyses Analysis[]
 }
 
 model Analysis {
-  id           Int      @id @default(autoincrement())
-  patientId    Int
-  patient      Patient  @relation(fields: [patientId], references: [id])
+  id Int @id @default(autoincrement())
+
+  patientId Int
+  patient   Patient @relation(fields: [patientId], references: [id])
 
   imageUrl     String
   organType    String
   analysisType String
   riskLevel    String
   status       String
-  createdAt    DateTime @default(now())
+
+  prediction String?
+  confidence Float?
+  heatmapUrl String?
+  maskUrl    String?
+  tumorSize  String?
+  location   String?
+
+  createdAt DateTime @default(now())
 }
 
 model Notification {

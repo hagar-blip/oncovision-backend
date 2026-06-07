@@ -44,3 +44,20 @@ exports.getById = async (id) => {
     }
   });
 };
+
+exports.getById = async (id) => {
+  return await prisma.analysis.findUnique({
+    where: { id: Number(id) },
+    include: {
+      patient: true
+    }
+  });
+};
+
+exports.updateAnalysis = async (id, data) => {
+  return await prisma.analysis.update({
+    where: { id: Number(id) },
+    data
+  });
+};
+

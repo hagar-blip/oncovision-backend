@@ -7,7 +7,6 @@ const analysisController = require("../controllers/analysis.controller");
 
 router.get("/recent", auth, analysisController.getRecent);
 
-// لازم السطر ده موجود
 router.get("/:id", auth, analysisController.getById);
 
 router.post(
@@ -15,6 +14,12 @@ router.post(
   auth,
   upload.single("image"),
   analysisController.upload
+);
+
+router.patch(
+  "/:id/result",
+  auth,
+  analysisController.updateResult
 );
 
 module.exports = router;

@@ -15,7 +15,7 @@ exports.getRecent = async (req, res) => {
 exports.upload = async (req, res) => {
   try {
     const result = await analysisService.upload(
-      req.file.filename,
+      req.file.buffer,
       req.body.patientId,
       req.body.organType
     );
@@ -47,5 +47,39 @@ exports.getById = async (req, res) => {
     res.status(500).json({
       error: error.message
     });
+  }
+};
+
+exports.getById = async (req, res) => {
+  try {
+    const analysis = await analysisService.getById(req.params.id);
+
+    if (!analysis) {
+      return res.status(404).json({ error: "Analysis not found" });
+    }
+
+    res.json(analysis);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.updateResult = async (req, res) => {
+  try {
+
+    const result =
+      await analysisService.updateResult(
+        req.params.id,
+        req.body
+      );
+
+    res.json(result);
+
+  } catch (error) {
+
+    res.status(500).json({
+      error: error.message
+    });
+
   }
 };
