@@ -54,10 +54,11 @@ exports.getById = async (id) => {
   });
 };
 
-exports.updateAnalysis = async (id, data) => {
+exports.updateAnalysisResult = async (id, data) => {
   return await prisma.analysis.update({
-    where: { id: Number(id) },
+    where: {
+      id: Number(id)
+    },
     data
   });
 };
-
